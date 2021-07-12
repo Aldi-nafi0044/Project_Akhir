@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+//    membuatan variebel
     private DatabaseReference databaseReference;
     private TextView timer,tvcalender;
     private Button btnulang, btncapai, btnmulai;
@@ -47,23 +48,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//      untuk menyambuangkan fitur yang ada dari layout
         tvcalender = (TextView)findViewById(R.id.tvdate);
         timer = (TextView)findViewById(R.id.tvTimer);
         btnulang = (Button)findViewById(R.id.btnmengulang);
         btncapai = (Button)findViewById(R.id.btnpencapai);
         btnmulai = (Button) findViewById(R.id.btnstart);
 
-        handler = new Handler();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        handler = new Handler(); /* untuk mengeksekusi Runnable */
+        databaseReference = FirebaseDatabase.getInstance().getReference();/*untuk mengeksekusi database*/
 
-        /*untuk kalender*/
+        /*untuk membuat kalender*/
         Date calendar = Calendar.getInstance().getTime();
         currentDate = DateFormat.getDateInstance(DateFormat.FULL).getDateTimeInstance().format(Calendar.getInstance().getTime());
         tvcalender.setText(currentDate);
-
         /*selesai*/
 
+        /*untuk mengeksekusi btncapai*/
         btncapai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,24 +73,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        /*untuk mengeksekusi btnulang*/
         btnulang.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+                /* untuk menghentikan waktu kemudian disimpan*/
                 handler.removeCallbacks(runnable, timer);
                 tmr = timer.getText().toString();
                 cldr = tvcalender.getText().toString();
 
                 simpanData(new database(tmr,cldr));
 
+                /* untuk memulai waktu lagi*/
                 StartTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable,0);
             }
         });
+        /*untuk mengeksekusi btnmulai*/
         btnmulai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*utnuk waktu mulai berjalan*/
                 StartTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable,0);
                 btnmulai.setEnabled(false);
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     public Runnable runnable = new Runnable() {
         @Override
         public void run(){
+            /* bentuk berjalannya waktu*/
             milisecond = SystemClock.uptimeMillis()- StartTime;
             seconds = milisecond / 1000; seconds2 = seconds % 60;
             minutes = seconds / 60; minutes2 = minutes % 60;

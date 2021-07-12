@@ -48,7 +48,7 @@ public class LihatPencapaian extends AppCompatActivity  {
         BarChart barChart = findViewById(R.id.barChartpencapaian);
 
 
-
+//       untuk barchart masih belum bias menyambung ke database
         ArrayList<BarEntry> visitors = new ArrayList<>();
         visitors.add(new BarEntry( 2015, 475));
         visitors.add(new BarEntry( 2016, 508));
